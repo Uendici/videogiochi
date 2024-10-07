@@ -1,11 +1,27 @@
 #include <iostream>
+#include <vector>
+#include <string>
+#include <unistd.h>
+#include <pwd.h>
+
+
 constexpr auto W = 10;
 constexpr auto H = 10;
 
 using namespace std;
 
+void print_entity(int x, int y, char glyph);
+void init_map();
+void clear();
+
 char map[W][H];
 
+void clear(){
+    COORD topleft = { 0, 0};
+    HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_SCREEN_BUFFER_INFO screen;
+
+}
 void init_map(){
 
     for(auto i = 0; i < H; i++){
