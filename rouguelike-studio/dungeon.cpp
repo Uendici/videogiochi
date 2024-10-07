@@ -1,8 +1,4 @@
-#include <iostream>
-#include <vector>
-#include <string>
-#include <unistd.h>
-#include <cstdlib>
+#include "goblinBase.h"
 
 constexpr auto W = 10;
 constexpr auto H = 10;
@@ -12,9 +8,16 @@ using namespace std;
 void print_entity(int x, int y, char glyph);
 void init_map();
 void clear();
+void interfaccia_combattimento(int SceltaAttacco);
 
 char map[W][H];
-
+void interfaccia_combattimento(int SceltaAttacco){
+    cout << "@\t\t"<< "!\n";
+    cout << "ATTACCHI!\n";
+    cout << "1)affondo 10*";
+    cin >> SceltaAttacco ;
+    
+}
 void clear() {
     std::system("clear");
 }
@@ -32,8 +35,10 @@ void print_entity(int x, int y, char glyph) {
 }
 
 int main() {
+    int SceltaAttacco = 0;
     char hero_glyph = '@';
-    int hero_x = 5, hero_y = 7;
+    char goblinBase = '!';
+    int hero_x = 5, hero_y = 7,goblinBase_x = 9, goblinBase_y = 9;
     bool running = true;
     cout << hero_glyph << " ti saluta\n";
     
@@ -41,6 +46,13 @@ int main() {
 
     while (running) {
         clear();
+        print_entity(goblinBase_x, goblinBase_y, goblinBase); // sampa goblin1
+        if(hero_x == goblinBase_x && hero_y == goblinBase_y){
+            cout << "ENTRATA IN COMBATTIMENTO\n";
+
+
+            return 0;
+        }
 
         // Stampa la mappa prima di posizionare il personaggio
         for(auto i = 0; i < H; i++) {
