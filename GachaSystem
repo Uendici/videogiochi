@@ -1,0 +1,190 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <string.h>
+
+#define MAX_PERSONAGGI 100
+
+// Funzione per la simulazione della pescata gacha
+void gacha(char personaggi[][50], char rarita[][10], int *contatore);
+void visualizzaPersonaggi(char personaggi[][50], char rarita[][10], int contatore);
+void ordinaPersonaggi(char personaggi[][50], char rarita[][10], int contatore);
+
+int main() {
+    int scelta1;
+    char personaggi[MAX_PERSONAGGI][50];
+    char rarita[MAX_PERSONAGGI][10];
+    int contatore = 0;
+
+    do {
+        printf(" ---------------------------\n");
+        printf("|                           |\n");
+        printf("|  1) percentuali di uscita |\n");
+        printf("|  2) pesca                 |\n");
+        printf("|  3) visualizza i PG       |\n");
+        printf("|  4) termina account       |\n");
+        printf("|                           |\n");
+        printf(" ---------------------------\n");
+        scanf("%d", &scelta1);
+        
+        // Mostra le percentuali di uscita
+        if (scelta1 == 1) {
+            printf(" -------------------------\n");
+            printf("|   r       50%%           |\n");
+            printf("|   sr      34.9%%         |\n");
+            printf("|   ssr     10%%           |\n");
+            printf("|   ur      4.9%%          |\n");
+            printf(" -------------------------\n");
+        } 
+        // Avvia la pescata gacha
+        else if (scelta1 == 2) {
+            gacha(personaggi, rarita, &contatore);
+        } 
+        // Visualizza i personaggi trovati
+        else if (scelta1 == 3) {
+            ordinaPersonaggi(personaggi, rarita, contatore);
+            visualizzaPersonaggi(personaggi, rarita, contatore);
+        }
+        // Gestione di scelta non valida
+        else if (scelta1 != 4) {
+            printf("Devi scegliere tra 1, 2, 3 e 4!\n");
+        }
+    } while (scelta1 != 4);
+    
+    printf("hai eliminato l'account\n");
+    return 0;
+}
+
+void gacha(char personaggi[][50], char rarita[][10], int *contatore) {
+    char yn;
+
+    srand(time(NULL));
+    printf("Sei sicuro di voler pescare? (y/n)\n");
+    scanf(" %c", &yn);
+
+    if (yn == 'y' || yn == 'Y') {
+        for (int i = 0; i < 11 && *contatore < MAX_PERSONAGGI; i++) {
+            int numeri_casuali = (rand() % 1000) + 1;
+            
+            // Gacha vero e proprio
+            if (numeri_casuali <= 500) {
+                strcpy(rarita[*contatore], "R");
+                if (numeri_casuali <= 50) {
+                    printf("HAI TROVATO UN R: Valhalla\n");
+                    strcpy(personaggi[*contatore], "Valhalla");
+                } else if (numeri_casuali <= 100) {
+                    printf("HAI TROVATO UN R: Vaid\n");
+                    strcpy(personaggi[*contatore], "Vaid");
+                } else if (numeri_casuali <= 200) {
+                    printf("HAI TROVATO UN R: Lione\n");
+                    strcpy(personaggi[*contatore], "Lione");
+                } else if (numeri_casuali <= 300) {
+                    printf("HAI TROVATO UN R: Aristela\n");
+                    strcpy(personaggi[*contatore], "Aristela");
+                } else if (numeri_casuali <= 400) {
+                    printf("HAI TROVATO UN R: Rem (GS)\n");
+                    strcpy(personaggi[*contatore], "Rem (GS)");
+                } else {
+                    printf("HAI TROVATO UN R: Parlot\n");
+                    strcpy(personaggi[*contatore], "Parlot");
+                }
+            } 
+            // Gestione della categoria SR
+            else if (numeri_casuali <= 850) {
+                strcpy(rarita[*contatore], "SR");
+                if (numeri_casuali <= 550) {
+                    printf("HAI TROVATO UN SR: Feld\n");
+                    strcpy(personaggi[*contatore], "Feld");
+                } else if (numeri_casuali <= 600) {
+                    printf("HAI TROVATO UN SR: Quon\n");
+                    strcpy(personaggi[*contatore], "Quon");
+                } else if (numeri_casuali <= 700) {
+                    printf("HAI TROVATO UN SR: Lian\n");
+                    strcpy(personaggi[*contatore], "Lian");
+                } else if (numeri_casuali <= 800) {
+                    printf("HAI TROVATO UN SR: Louvet\n");
+                    strcpy(personaggi[*contatore], "Louvet");
+                } else {
+                    printf("HAI TROVATO UN SR: Kazlaser\n");
+                    strcpy(personaggi[*contatore], "Kazlaser");
+                }
+            } 
+            // Gestione della categoria SSR
+            else if (numeri_casuali <= 950) {
+                strcpy(rarita[*contatore], "SSR");
+                if (numeri_casuali <= 900) {
+                    if (numeri_casuali <= 850) {
+                        printf("HAI TROVATO UN SSR: Illya\n");
+                        strcpy(personaggi[*contatore], "Illya");
+                    } else {
+                        printf("HAI TROVATO UN SSR: Hart\n");
+                        strcpy(personaggi[*contatore], "Hart");
+                    }
+                } else {
+                    printf("HAI TROVATO UN SSR: Mizuki the Twelfth\n");
+                    strcpy(personaggi[*contatore], "Mizuki the Twelfth");
+                }
+            } 
+            // Gestione della categoria UR
+            else {
+                strcpy(rarita[*contatore], "UR");
+                if (numeri_casuali <= 975) {
+                    printf("HAI TROVATO UN UR: Shirou Emiya\n");
+                    strcpy(personaggi[*contatore], "Shirou Emiya");
+                } else {
+                    printf("HAI TROVATO UN UR: Emperor Isliid\n");
+                    strcpy(personaggi[*contatore], "Emperor Isliid");
+                }
+            }
+            (*contatore)++;
+        }
+    } 
+    // Gestione della risposta negativa
+    else if (yn == 'n' || yn == 'N') {
+        printf("Ok\n");
+    } 
+    // Gestione di scelta non valida
+    else {
+        printf("Scelta non valida.\n");
+    }
+}
+
+void visualizzaPersonaggi(char personaggi[][50], char rarita[][10], int contatore) {
+    if (contatore == 0) {
+        printf("Non hai trovato ancora nessun personaggio.\n");
+    } else {
+        printf("Personaggi trovati:\n");
+        for (int i = 0; i < contatore; i++) {
+            printf("%s - %s\n", personaggi[i], rarita[i]);
+        }
+    }
+}
+
+// Funzione per ordinare i personaggi in base alla rarità
+void ordinaPersonaggi(char personaggi[][50], char rarita[][10], int contatore) {
+    for (int i = 0; i < contatore - 1; i++) {
+        for (int j = i + 1; j < contatore; j++) {
+            int scambio = 0;
+            if (strcmp(rarita[i], "R") > 0 && strcmp(rarita[j], "R") == 0) {
+                scambio = 1;
+            } else if (strcmp(rarita[i], "SR") > 0 && (strcmp(rarita[j], "R") == 0 || strcmp(rarita[j], "SR") == 0)) {
+                scambio = 1;
+            } else if (strcmp(rarita[i], "SSR") > 0 && (strcmp(rarita[j], "R") == 0 || strcmp(rarita[j], "SR") == 0 || strcmp(rarita[j], "SSR") == 0)) {
+                scambio = 1;
+            }
+            if (scambio) {
+                char tempPersonaggio[50];
+                char tempRarita[10];
+                
+                strcpy(tempPersonaggio, personaggi[i]);
+                strcpy(tempRarita, rarita[i]);
+                
+                strcpy(personaggi[i], personaggi[j]);
+                strcpy(rarita[i], rarita[j]);
+                
+                strcpy(personaggi[j], tempPersonaggio);
+                strcpy(rarita[j], tempRarita);
+            }
+        }
+    }
+}
