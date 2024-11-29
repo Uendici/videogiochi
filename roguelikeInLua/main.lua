@@ -1,26 +1,17 @@
-local x, y = 300, 300  -- Posizione iniziale
-local speed = 200      -- Velocità di movimento
 
-function love.load()
-    love.graphics.setBackgroundColor(0.1, 0.1, 0.1) -- Colore di sfondo
-end
+
+-- main.lua
+local character = require("character")  -- Carica il modulo del personaggio
 
 function love.update(dt)
-    if love.keyboard.isDown("up") then
-        y = y - speed * dt
-    end
-    if love.keyboard.isDown("down") then
-        y = y + speed * dt
-    end
-    if love.keyboard.isDown("left") then
-        x = x - speed * dt
-    end
-    if love.keyboard.isDown("right") then
-        x = x + speed * dt
-    end
+    character.update(dt)  -- Chiamata alla funzione di movimento del personaggio
 end
 
 function love.draw()
-    love.graphics.setColor(1, 0, 0)  -- Colore rosso
-    love.graphics.circle("fill", x, y, 50)
+    -- Imposta il colore dello sfondo (colore RGB)
+    love.graphics.setColor(0.4, 0, 1)
+    love.graphics.rectangle("fill", 0, 0, love.graphics.getWidth(), love.graphics.getHeight())  -- Disegna uno sfondo che copre tutto lo schermo
+
+    love.graphics.setColor(1, 1, 1)  -- Imposta il colore del disegno su bianco (default)
+    character.draw()  -- Disegna il personaggio
 end
