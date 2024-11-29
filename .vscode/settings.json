@@ -1,5 +1,7 @@
 {
-    "files.associations": {
-        "iostream": "cpp"
-    }
+    "Lua.runtime.version": "Lua 5.1", // LÖVE usa Lua 5.1
+    "Lua.workspace.library": [
+        "path/to/love" // Percorso alla cartella LÖVE
+    ],
+    "Lua.diagnostics.globals": ["love"] // Dichiara che 'love' è globale
 }
